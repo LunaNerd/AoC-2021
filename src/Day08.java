@@ -24,7 +24,7 @@ public class Day08 {
         }
         //System.out.println(sumToDigit);
 
-        Scanner sc = new Scanner(new File("input07.txt"));
+        Scanner sc = new Scanner(new File("Day07.txt"));
         while (sc.hasNextLine()) {
             String[] split = sc.nextLine().split("\\|");
 

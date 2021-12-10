@@ -1,10 +1,10 @@
-import d08.Coordinate;
+import Classes08.Coordinate;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Day08 {
+public class Day09 {
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner sc = new Scanner(new File("Day08.txt"));
