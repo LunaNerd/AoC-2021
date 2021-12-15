@@ -11,7 +11,8 @@ public class Day15 {
 
     public static void main(String[] args) throws FileNotFoundException {
         readMapFromFile();
-        //convertToBigMap();
+        convertToBigMap();
+        System.out.println(size);
 
         minSum = new int[size][size];
         for (int y = 0; y<size; y++) {
@@ -38,7 +39,7 @@ public class Day15 {
                 }
             }
 
-            for (int y = 0; y<size; y++) {
+            /*for (int y = 0; y<size; y++) {
                 for (int x = 0; x<size; x++) {
                     if (minSum[y][x] == Integer.MAX_VALUE) {
                         System.out.print(".");
@@ -49,7 +50,7 @@ public class Day15 {
                 }
                 System.out.println();
             }
-            System.out.println();
+            System.out.println();*/
         }
         System.out.println(minSum[size-1][size-1]);
     }
@@ -87,13 +88,16 @@ public class Day15 {
         return min;
     }
 
-    /*public static void convertToBigMap() {
+    public static void convertToBigMap() {
         int[][] bigMap = new int[size*5][size*5];
         for (int y = 0; y<size; y++) {
             for (int x = 0; x<size; x++) {
                 for (int ver = 0; ver < 5; ver++) {
                     for (int hor = 0; hor < 5; hor++) {
-                        bigMap[ver*size + y][hor*size + x] = (levelMap[y][x] + ver + hor) % 10;
+                        bigMap[ver*size + y][hor*size + x] = (levelMap[y][x] + ver + hor);
+                        while (bigMap[ver*size + y][hor*size + x] > 9) {
+                            bigMap[ver*size + y][hor*size + x] -= 9;
+                        }
                     }
                 }
             }
@@ -112,10 +116,10 @@ public class Day15 {
             }
             System.out.println();
         }
-    }*/
+    }
 
     public static void readMapFromFile() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("Day15_s.txt"));
+        Scanner sc = new Scanner(new File("Day15.txt"));
 
         String[] split = sc.nextLine().split("");
         size = split.length;
