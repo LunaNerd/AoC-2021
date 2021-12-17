@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -14,9 +13,9 @@ public class Day17 {
     static int y_min = -10;
     static int y_max = -5;*/
 
-    static Map<Integer, Set<Integer>> potential_x;
+    static Map<Integer, Set<Integer>> potential_v_x;
     static Map<Integer, Integer> xConstantSinceStep = new HashMap<>();
-    static Map<Integer, Set<Integer>> potential_y;
+    static Map<Integer, Set<Integer>> potential_v_y;
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -25,18 +24,18 @@ public class Day17 {
         int y_v_max = (-y_min) - 1;
         int y_v_min = y_min;
 
-        potential_x = fillPotentialMap(x_v_max, x_v_min, x_max, x_min, false);
-        potential_y = fillPotentialMap(y_v_max, y_v_min, y_max, y_min, true);
+        potential_v_x = fillPotentialMap(x_v_max, x_v_min, x_max, x_min, false);
+        potential_v_y = fillPotentialMap(y_v_max, y_v_min, y_max, y_min, true);
 
-        System.out.println(potential_x);
+        System.out.println(potential_v_x);
         System.out.println();
-        System.out.println(potential_y);
+        System.out.println(potential_v_y);
 
         List<String> mine = new ArrayList<>();
 
         int count = 0;
-        for (var potentialSteps_y : potential_y.entrySet()) {
-            for (var potentialSteps_x : potential_x.entrySet()) {
+        for (var potentialSteps_y : potential_v_y.entrySet()) {
+            for (var potentialSteps_x : potential_v_x.entrySet()) {
                 boolean isStandStill = xConstantSinceStep.containsKey(potentialSteps_x.getKey());
                 if (isStandStill) {
                     for (Integer step : potentialSteps_y.getValue()) {

@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Day15 {
+    //these are just the levels you get when reading the map
     public static int[][] levelMap;
 
     //contains the lowest sum of danger to get to a certain position
@@ -11,21 +12,25 @@ public class Day15 {
 
     public static void main(String[] args) throws FileNotFoundException {
         readMapFromFile();
-        convertToBigMap();
+        convertToBigMap();      //Part2
         System.out.println(size);
 
+        //filling the minSum map with high values so they are not put into consideration for a non-dangerous path
         minSum = new int[size][size];
         for (int y = 0; y<size; y++) {
             for (int x = 0; x<size; x++) {
                 minSum[y][x] = Integer.MAX_VALUE;
             }
         }
+
+        //Initializing the minSum map with the dangerlevels of the points besides the start position
         minSum[0][1] = levelMap[0][1];
         minSum[1][0] = levelMap[1][0];
 
         long oldGrandSum = 0;
         long grandSum = 2;
-
+        //  ^These two sums are used to check weather anything is still changing after
+        //  checking every tile for a less dangerous route
         while (oldGrandSum != grandSum) {
             oldGrandSum = grandSum;
             grandSum = 0;

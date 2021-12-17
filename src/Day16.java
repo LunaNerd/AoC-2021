@@ -1,6 +1,6 @@
-import Classes15.Operator;
-import Classes15.OperatorBits;
-import Classes15.OperatorPack;
+import Classes16.Operator;
+import Classes16.OperatorBits;
+import Classes16.OperatorPack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ public class Day16 {
 
         Stack<Operator> stack = new Stack<>();
         byte b = 0;
-        stack.add(new OperatorBits(b, bitCode.length-1, bitCode.length-1));
+        stack.add(new OperatorBits(b, bitCode.length - 1, bitCode.length - 1));
         int index = 0;
 
         long versionSum = 0;
@@ -28,36 +28,31 @@ public class Day16 {
                 stack.pop();
                 if (!stack.isEmpty()) {
                     stack.peek().addValueToPackage(value);
-                }
-                else {
-                    System.out.println("--->  "  + value);
+                } else {
+                    System.out.println("--->  " + value);
                 }
 
-            }
-            else if (bitCode.length-index < 32 && bitCodeToLong(index, bitCode.length) == 0) {
+            } else if (bitCode.length - index < 32 && bitCodeToLong(index, bitCode.length) == 0) {
                 System.out.println("trailing zeros detected");
-                index = bitCode.length-1;
-            }
-            else {
+                index = bitCode.length - 1;
+            } else {
                 versionSum += bitCodeToLong(index, index + 3);
                 index += 3;
-                if (4L != bitCodeToLong(index, index+3)) {
-                    byte type = (byte) bitCodeToLong(index, index+3);
+                if (4L != bitCodeToLong(index, index + 3)) {
+                    byte type = (byte) bitCodeToLong(index, index + 3);
                     index += 3;
                     if (bitCode[index] == 0) {
                         index++;
-                        int length = (int) (bitCodeToLong(index, index+15));
+                        int length = (int) (bitCodeToLong(index, index + 15));
                         index += 15;
                         System.out.println(index);
-                        stack.add(new OperatorBits(type, length, index+length));
-                    }
-                    else {
+                        stack.add(new OperatorBits(type, length, index + length));
+                    } else {
                         index++;
-                        stack.add(new OperatorPack(type, (int) bitCodeToLong(index, index+11)));
+                        stack.add(new OperatorPack(type, (int) bitCodeToLong(index, index + 11)));
                         index += 11;
                     }
-                }
-                else {
+                } else {
                     System.out.println("Literal Value");
                     index += 3;
                     long literalNumber = 0;
@@ -87,23 +82,23 @@ public class Day16 {
     private static long bitCodeToLong(int start, int end) {
         long machtTwee = 1;
         long res = 0;
-        for (int i = end-1; i >= start; i--) {
-            res += bitCode[i]*machtTwee;
+        for (int i = end - 1; i >= start; i--) {
+            res += bitCode[i] * machtTwee;
             machtTwee *= 2;
         }
-        for (int i = start; i<end; i++) {
+        /*for (int i = start; i < end; i++) {
             System.out.print(bitCode[i]);
         }
-        System.out.println();
+        System.out.println();*/
         return res;
     }
 
     private static void fillHexToLong() {
         hexToLong = new HashMap<>();
-        for (long i = 0; i<10; i++) {
+        for (long i = 0; i < 10; i++) {
             hexToLong.put((char) ('0' + i), i);
         }
-        for (long i = 10; i<16; i++) {
+        for (long i = 10; i < 16; i++) {
             hexToLong.put((char) ('A' + i - 10), i);
         }
     }
@@ -114,9 +109,9 @@ public class Day16 {
 
         Scanner sc = new Scanner(new File("Day16.txt"));
         hexaDecimal = sc.next();
-        bitCode = new byte[hexaDecimal.length()*4];
-        for (int i  = 0; i < hexaDecimal.length(); i++) {
-            int index = 4*i;
+        bitCode = new byte[hexaDecimal.length() * 4];
+        for (int i = 0; i < hexaDecimal.length(); i++) {
+            int index = 4 * i;
             long getal = hexToLong.get(hexaDecimal.charAt(i));
             for (int j = 3; j >= 0; j--) {
                 bitCode[index + j] = (byte) (getal % 2);
@@ -127,15 +122,5 @@ public class Day16 {
             System.out.print(i);
         }
         System.out.println();
-    }
-
-    private static String longToBinary(long l) {
-        StringBuilder sb = new StringBuilder();
-        while (l != 0) {
-            sb.append(l % 2);
-            l = l - (l % 2);
-            l /= 2;
-        }
-        return sb.reverse().toString();
     }
 }
